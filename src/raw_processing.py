@@ -1,6 +1,8 @@
 import tempfile
 import subprocess
 import os
+import platform
+import shutil
 from pathlib import Path
 
 os.environ["PATH"] += os.pathsep + r'C:\Program Files\darktable\bin'
@@ -14,6 +16,7 @@ def process_images(copied_photos, progress_callback=None):
                               "You can now turn off the camera.",
                               f"Processing photos...")
         _generate_ultra_hdr(src, dst)
+
 
 def _generate_ultra_hdr(input_path, output_path):
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -54,7 +57,7 @@ def _generate_ultra_hdr(input_path, output_path):
             width, height = _get_image_dimensions(sdr_png)
 
             subprocess.run([
-                './ultrahdr_app',
+                'ultrahdr_app',
                 '-m', '0',
                 '-p', hdr_raw,
                 '-y', sdr_raw,
@@ -95,3 +98,23 @@ def _get_image_dimensions(image_path):
     # result.stdout will be something like "2160x2160\n"
     dimensions = result.stdout.strip().split('x')
     return dimensions[0], dimensions[1]
+
+if __name__ == '__main__':
+    if platform.system() == "Darwin" and not shutil.which("darktable-cli"):
+        candidates = [
+            Path("/Applications/darktable.app/Contents/MacOS/darktable-cli"),
+            Path.home()
+            / "Applications/darktable.app/Contents/MacOS/darktable-cli",
+            Path("/opt/homebrew/bin/darktable-cli"),  # Apple Silicon Homebrew
+            Path("/usr/local/bin/darktable-cli"),  # Intel Homebrew
+            Path("/opt/local/bin/darktable-cli"),  # MacPorts
+        ]
+    for binary_path in candidates:
+        if binary_path.is_file():
+            os.environ["PATH"] = (
+                    str(binary_path.parent)
+                    + os.pathsep
+                    + os.environ.get("PATH", "")
+            )
+            break
+    #_generate_ultra_hdr(input, output)

@@ -2,6 +2,8 @@ import ctypes
 import platform
 import time
 import psutil
+import os
+import re
 
 def wait_for_drives(target_name="LUMIX", interval=1):
     while True:
@@ -13,6 +15,8 @@ def wait_for_drives(target_name="LUMIX", interval=1):
 def get_drive_paths(target_name):
     if platform.system() == "Windows":
         return get_drive_paths_win32(target_name)
+    if platform.system() == "Darwin":
+        return get_drive_paths_darwin(target_name)
     return []
 
 def get_drive_paths_win32(target_name):
@@ -35,5 +39,17 @@ def get_drive_paths_win32(target_name):
                 matching_drives.append(mountpoint)
         except Exception:
             continue
+    return matching_drives
+
+def get_drive_paths_darwin(target_name):
+    matching_drives = []
+    target_clean = re.escape(target_name.strip().lower())
+    pattern = re.compile(rf"^{target_clean}([\s\-_]*\d+)?$")
+
+    for partition in psutil.disk_partitions():
+        if partition.mountpoint.startswith("/Volumes/"):
+            volume_name = os.path.basename(partition.mountpoint).lower()
+            if pattern.match(volume_name):
+                matching_drives.append(partition.mountpoint)
 
     return matching_drives

@@ -2,8 +2,25 @@ import hashlib
 import shutil
 import os
 import json
+import platform
+from pathlib import Path
 
-archive_path = "C:/Users/simon/Pictures/"
+def get_archive_path():
+    system = platform.system()
+    if system == "Windows":
+        try:
+            import ctypes
+            from ctypes import wintypes
+            csidl_mypictures = 0x0027  # Shell ID for Pictures
+            buf = ctypes.create_unicode_buffer(wintypes.MAX_PATH)
+            result = ctypes.windll.shell32.SHGetFolderPathW(
+                None, csidl_mypictures, None, 0, buf
+            )
+            if result == 0 and buf.value:
+                return Path(buf.value)
+        except Exception:
+            pass  # Fall back to standard home location if API call fails
+    return Path.home() / "Pictures"
 
 def copy_new_files(drives, file_ending=".RW2", progress_callback=None):
     all_source_photos = []
@@ -18,7 +35,7 @@ def copy_new_files(drives, file_ending=".RW2", progress_callback=None):
     hash_list = _remove_hash_for_removed_items(hash_list, all_source_photos_hashed)
     hash_list, source_paths, file_paths_hashed = _remove_hashed_items(hash_list, all_source_photos, all_source_photos_hashed)
 
-    target_paths = [os.path.join(archive_path, os.path.basename(f)) for f in source_paths]
+    target_paths = [os.path.join(get_archive_path(), os.path.basename(f)) for f in source_paths]
 
     for i, (src, dst) in enumerate(zip(source_paths, target_paths), start=1):
         if progress_callback:

@@ -1,12 +1,18 @@
+import sys
+
 import src.usb_connection as usb
 import src.file_handling as fh
 import src.raw_processing as raw
+from src.check_dependencies import check_dependencies
 
 _first_run = True
 
 def main():
+    if not check_dependencies():
+        sys.exit(0)
     update_display(0, "Please connect your camera.", "Waiting for USB connection...")
     drives = usb.wait_for_drives()
+    print(drives)
     update_display(0, "Please wait...", f"Found drives {drives}.")
     copied_photos = fh.copy_new_files(drives, progress_callback=update_display)
     raw.process_images(copied_photos, progress_callback=update_display)
