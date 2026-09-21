@@ -17,7 +17,17 @@ Right: Ultra HDR output
 <img src="readme_img/P1061251.JPG" width="48%"/> <img src="readme_img/P1061252-hdr.jpg" width="48%"/>
 <img src="readme_img/P1061299.JPG" width="48%"/> <img src="readme_img/P1061299-hdr.jpg" width="48%"/>
 <img src="readme_img/P1061266.JPG" width="48%"/> <img src="readme_img/P1061266-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061255.JPG" width="48%"/> <img src="readme_img/P1061255-hdr.jpg" width="48%"/>
 <img src="readme_img/P1061280.JPG" width="48%"/> <img src="readme_img/P1061280-hdr.jpg" width="48%"/>
+
+This following test image can be used to determine what kind of dynamic range your current display setup is capable of.
+
+The **right** image is an Ultra HDR image where the "Active" Text should appear of similar or much higher brightness compared to the "Inactive" Text.
+This depends on how much HDR headroom your current display setup has. Lowering the brightness on your display can increase the headroom.
+
+The **left** image is an SDR image, and it's how the right image should appear when it's not being displayed in HDR.
+
+<img src="readme_img/ultrahdr off.jpg" width="48%"/> <img src="readme_img/ultrahdr test.jpg" width="48%"/>
 
 # Explanation
 
