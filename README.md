@@ -44,7 +44,7 @@ The HDR rendition largely omits this to take advantage of the dynamic range affo
 
 The HDR version is not intended to purely be a brighter version, but rather one that was tuned to preserve highlight detail.
 Cameras weren't necessarily designed with this in mind, and I strongly recommend shooting with exposure compensation to preserve highlight detail, depending on the contrast in the image.
-Shooting with Zebras helps identify situations where you want to expose to the left, such with as bokeh orbs or bright signs.
+Shooting with Zebras helps identify situations where you want to expose to the left, such as with bokeh orbs or bright signs.
 
 # How to use
 
