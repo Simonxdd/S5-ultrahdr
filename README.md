@@ -13,9 +13,11 @@ Left: Lumix JPG "Fine" output <br>
 Right: Ultra HDR output
 <br>
 
-<img src="readme_img/P1061209.JPG" width="48%"/> <img src="readme_img/P1061209-hdr.jpg" width="48%"/>
-
-<img src="readme_img/P1061029.JPG" width="48%"/> <img src="readme_img/P1061029-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061262.JPG" width="48%"/> <img src="readme_img/P1061262-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061251.JPG" width="48%"/> <img src="readme_img/P1061252-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061299.JPG" width="48%"/> <img src="readme_img/P1061299-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061266.JPG" width="48%"/> <img src="readme_img/P1061266-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061280.JPG" width="48%"/> <img src="readme_img/P1061280-hdr.jpg" width="48%"/>
 
 # Explanation
 
