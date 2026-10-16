@@ -54,9 +54,6 @@ Imported files are noted in a hash list to prevent reimporting files that were a
 
 This currently supports Windows and macOS, and was most recently tested with Darktable 5.6.1.
 
-Currently you have to install the two .dtstyle files to your own Darktable database, as using a .dtstyle file is not supported by darktable.cli.
-Darktable probably needs to be configured to the AgX workflow as well.
-
 file_handling.py includes the function to generate the Ultra HDR photo itself. 
 
 Dependencies:

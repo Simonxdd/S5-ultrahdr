@@ -66,6 +66,20 @@ def check_libultrahdr():
     except (FileNotFoundError, OSError):
         return False
 
+def check_libavif():
+    try:
+        subprocess.run(
+            ["avifgainmaputil"],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return True
+    except subprocess.SubprocessError:
+        return True
+    except (FileNotFoundError, OSError):
+        return False
+
 def check_exiftool():
     try:
         subprocess.run(
