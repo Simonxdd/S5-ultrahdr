@@ -4,7 +4,7 @@ import src.file_handling as fh
 import src.raw_processing as raw
 from src.check_dependencies import check_dependencies
 
-first_run = True
+_first_run = True
 
 def main():
     if not check_dependencies("libultrahdr"):
