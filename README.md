@@ -10,15 +10,15 @@ The HDR version on the right will only be shown on compatible display devices, o
 Such devices include recent iPhones, recent Android phones with SDR dimming support and Windows/macOS computers with HDR output.
 <br> <br>
 Left: Lumix JPG "Fine" output <br>
-Right: Ultra HDR output
+Right: Ultra HDR AVIF output
 <br>
 
-<img src="readme_img/P1061262.JPG" width="48%"/> <img src="readme_img/P1061262-hdr.jpg" width="48%"/>
-<img src="readme_img/P1061251.JPG" width="48%"/> <img src="readme_img/P1061252-hdr.jpg" width="48%"/>
-<img src="readme_img/P1061299.JPG" width="48%"/> <img src="readme_img/P1061299-hdr.jpg" width="48%"/>
-<img src="readme_img/P1061266.JPG" width="48%"/> <img src="readme_img/P1061266-hdr.jpg" width="48%"/>
-<img src="readme_img/P1061255.JPG" width="48%"/> <img src="readme_img/P1061255-hdr.jpg" width="48%"/>
-<img src="readme_img/P1061280.JPG" width="48%"/> <img src="readme_img/P1061280-hdr.jpg" width="48%"/>
+<img src="readme_img/P1061262.JPG" width="48%"/> <img src="readme_img/P1061262-hdr.avif" width="48%"/>
+<img src="readme_img/P1061251.JPG" width="48%"/> <img src="readme_img/P1061252-hdr.avif" width="48%"/>
+<img src="readme_img/P1061299.JPG" width="48%"/> <img src="readme_img/P1061299-hdr.avif" width="48%"/>
+<img src="readme_img/P1061266.JPG" width="48%"/> <img src="readme_img/P1061266-hdr.avif" width="48%"/>
+<img src="readme_img/P1061255.JPG" width="48%"/> <img src="readme_img/P1061255-hdr.avif" width="48%"/>
+<img src="readme_img/P1061280.JPG" width="48%"/> <img src="readme_img/P1061280-hdr.avif" width="48%"/>
 
 This following test image can be used to determine what kind of dynamic range your current display setup is capable of.
 
@@ -32,8 +32,9 @@ The **left** image is an SDR image, and it's how the right image should appear w
 # Explanation
 
 Ultra HDR typically uses an SDR base image with a separate gain map that can be applied to get an HDR image.
-This leaves older jpeg decoders with an SDR base image and excellent backwards-compatibility, but at the cost of quality and coding efficiency for the HDR image.
+This leaves older image decoders with an SDR base image and excellent backwards-compatibility, but at the cost of quality and coding efficiency for the HDR image.
 Googles libultrahdr automatically generates Ultra HDR images by accepting an SDR and an HDR rendition of an image.
+Libavif contains avifgainmaputil, which offers similar functionality with more efficient avif image encoding.
 
 The two renditions are served by different Darktable styles, which apply different modules to process the image in different ways.
 Darktable currently lags behind commercial tools like Lightroom in terms of HDR support.
@@ -48,18 +49,41 @@ Shooting with Zebras helps identify situations where you want to expose to the l
 
 # How to use
 
-main.py will automatically import any .RW2 images to the Images folder of your OS.
+Using AVIF image encoding
+
+```sh
+   python3 main.py -i "input.RW2" -o "output.avif"
+   ```
+
+- `-i` `-o`
+
+File input and output.
+
+- `-size`
+
+Set AVIF size for decoding compatibility, Default is `PLUS`:
+
+`SMALL` = max. 2048x2048, largest that should decode on 2048x2048 limited decoders
+
+`BASELINE` = max. 3840x3840, max. 8912896 Pixels, largest that should decode on 3840x3840 decoders, with AVIF Level 5.1 Pixel limit
+
+`PLUS`  = max. 4096x4096, largest that will decode on a Pixel 8 in Google Photos. 
+
+`ADVANCED` = max. 16384x8704, max. 35651584 Pixels, 444 Chroma, equivalent to AVIF Advanced profile with AV1 High and Level 6.0.
+
+
+importer.py will automatically import any .RW2 images to the Images folder of your OS.
 It waits for a USB connection, copies the files and processes them with an -hdr suffix at the output.
 Imported files are noted in a hash list to prevent reimporting files that were already deleted from the Images folder.
+Currently, this uses libultrahdr with JPEG images.
 
-This currently supports Windows and macOS, and was most recently tested with Darktable 5.6.1.
-
-file_handling.py includes the function to generate the Ultra HDR photo itself. 
+Most recently tested with Darktable 5.6.1 on macOS and Windows.
 
 Dependencies:
 - Darktable
-- Libultrahdr build (ultrahdr_app)
+- Libultrahdr (importer.py)
+- libavif (main.py)
 - Exiftool
 
 Python dependencies:
-- psutil
+- psutil (importer.py)

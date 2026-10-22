@@ -4,14 +4,19 @@ import shutil
 import subprocess
 from pathlib import Path
 
-def check_dependencies():
+def check_dependencies(backend: str):
     bad = False
     if not check_darktable():
         print("Darktable could not be found on this system.")
         bad = True
-    if not check_libultrahdr():
-        print("libultrahdr could not be found on this system.")
-        bad = True
+    if backend == "libultrahdr":
+        if not check_libultrahdr():
+            print("libultrahdr could not be found on this system.")
+            bad = True
+    if backend == "libavif":
+        if not check_libavif():
+            print("libavif could not be found on this system.")
+            bad = True
     if not check_exiftool():
         print("exiftool could not be found on this system.")
         bad = True
